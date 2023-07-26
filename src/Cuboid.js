@@ -20,6 +20,7 @@ const Cuboid = ({ textureUrl }) => {
     box.current.material = material;
 
     const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(1, 1, 0), scene.current);
+    console.log(light)
 
     engine.current.runRenderLoop(() => {
       scene.current.render();
