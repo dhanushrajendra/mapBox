@@ -1,3 +1,4 @@
+// In Cuboid.js
 import React, { useEffect, useRef } from 'react';
 import * as BABYLON from 'babylonjs';
 
@@ -9,19 +10,21 @@ const Cuboid = ({ textureUrl }) => {
   const box = useRef(null);
 
   useEffect(() => {
-    engine.current = new BABYLON.Engine(canvasRef.current, true);
-    scene.current = new BABYLON.Scene(engine.current);
-    camera.current = new BABYLON.ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2.5, 5, new BABYLON.Vector3(0, 0, 0), scene.current);
-    camera.current.attachControl(canvasRef.current, true);
-    box.current = BABYLON.MeshBuilder.CreateBox('box', { size: 1 }, scene.current);
+    // Check if the engine is already initialized
+    if (!engine.current) {
+      engine.current = new BABYLON.Engine(canvasRef.current, true);
+      scene.current = new BABYLON.Scene(engine.current);
+      camera.current = new BABYLON.ArcRotateCamera('camera', -Math.PI / 2, Math.PI / 2.5, 5, new BABYLON.Vector3(0, 0, 0), scene.current);
+      camera.current.attachControl(canvasRef.current, true);
+      box.current = BABYLON.MeshBuilder.CreateBox('box', { size: 1 }, scene.current);
+    }
 
+    // Apply texture to the cuboid
     const material = new BABYLON.StandardMaterial('textureMaterial', scene.current);
     material.diffuseTexture = new BABYLON.Texture(textureUrl, scene.current);
     box.current.material = material;
 
-    const light = new BABYLON.HemisphericLight('light', new BABYLON.Vector3(1, 1, 0), scene.current);
-    console.log(light)
-
+    // Run the scene
     engine.current.runRenderLoop(() => {
       scene.current.render();
     });
