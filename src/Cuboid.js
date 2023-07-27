@@ -1,4 +1,3 @@
-// In Cuboid.js
 import React, { useEffect, useRef } from 'react';
 import * as BABYLON from 'babylonjs';
 
@@ -10,7 +9,7 @@ const Cuboid = ({ textureUrl }) => {
   const box = useRef(null);
 
   useEffect(() => {
-    // Check if the engine is already initialized
+    
     if (!engine.current) {
       engine.current = new BABYLON.Engine(canvasRef.current, true);
       scene.current = new BABYLON.Scene(engine.current);
@@ -19,12 +18,11 @@ const Cuboid = ({ textureUrl }) => {
       box.current = BABYLON.MeshBuilder.CreateBox('box', { size: 1 }, scene.current);
     }
 
-    // Apply texture to the cuboid
+    
     const material = new BABYLON.StandardMaterial('textureMaterial', scene.current);
     material.diffuseTexture = new BABYLON.Texture(textureUrl, scene.current);
     box.current.material = material;
 
-    // Run the scene
     engine.current.runRenderLoop(() => {
       scene.current.render();
     });
